@@ -1,8 +1,10 @@
 import axios from "axios";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const Table = ({ data }) => {
-  
+
+const params = useParams();
+
     return (
       <table>
         <tbody>
@@ -15,7 +17,7 @@ const Table = ({ data }) => {
               <td>{item.name}</td>
               <td>{item.email}</td>
               <td>  
-              <Link to={`/editarUsuario/${item._id}`}>
+              <Link to={`/EditarUsuarioPorEmpresa/${params.id}/${item._id}`}>
                         <li className='btn btn-success'>Editar</li>
                     </Link>
                     
@@ -26,7 +28,7 @@ const Table = ({ data }) => {
               </td>
 
               <td>
-              <Link to={`/blockchain/${item._id}`}>
+              <Link to={`/BlockchainUsuarioPorEmpresa/${params.id}/${item._id}`}>
                         <li className='btn btn-info'>Ver Block Chain</li>
                     </Link>
               </td>

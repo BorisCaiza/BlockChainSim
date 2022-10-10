@@ -54,6 +54,7 @@ app.use(express.json());
 //rutas
 app.use("/api/user", require('./Routes/User.routes'));
 app.use("/api/blockchain", require('./Routes/Blockchain.routes'));
+app.use("/api/enterPrise", require('./Routes/Empresa.routes'));
 
 //ruta simple
 app.get("/api", (req, res) => {

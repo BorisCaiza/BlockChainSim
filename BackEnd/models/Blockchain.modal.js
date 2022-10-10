@@ -6,9 +6,9 @@ const BlockChainSchema = new Schema({
     heigh: { type: String, require: [true, 'heigh'] },
     body: { type: String, require: [true, 'body'] },
     previousHash: { type: String, require: [true, 'hash'] },
-    userId: { type: mongoose.Types.ObjectId, required: true, ref: 'User' }
-
-
+    tratamiento: {type:String},
+    userId: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
+    enterpriseId: { type: mongoose.Types.ObjectId, required: true, ref: 'Enterprise' }
     
 }, {
     timestamps: true

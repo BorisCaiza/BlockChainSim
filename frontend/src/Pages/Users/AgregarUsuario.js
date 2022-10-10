@@ -11,8 +11,6 @@ const  AgregarUsuario = ()=>{
     const[password, setPassword] = useState("");
 
     const agregarU =()=>{
-
-
             var usuario = {
                 name: name,
                 email: email,
@@ -25,6 +23,7 @@ const  AgregarUsuario = ()=>{
             axios.post('http://localhost:8000/api/user/crear', usuario).then(
                 res =>{
                     alert(res.data)
+                    console.log(res.data)
                 }
             )
             .then(err => {console.log(err)})

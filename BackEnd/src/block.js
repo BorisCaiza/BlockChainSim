@@ -11,7 +11,6 @@ class Block {
     this.previousBlockHash = null; //referencia al bloque anterior.
     this.userId = ""; //
   }
-
   validate() {
     const self = this; //referencia al bloque
 

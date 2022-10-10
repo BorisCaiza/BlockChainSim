@@ -2,21 +2,28 @@ import axios from "axios";
 import { Link, useNavigate } from 'react-router-dom';
 
 const Table = ({ data }) => {
-  
+
     return (
       <table>
         <tbody>
           <tr>
             <th>Name</th>
-            <th>Email</th>
+            <th>Location</th>
           </tr>
           {data.map((item) => (
             <tr key={item._id}>
               <td>{item.name}</td>
-              <td>{item.email}</td>
+              <td>{item.location}</td>
               <td>  
-              <Link to={`/editarUsuario/${item._id}`}>
+              <Link to={`/editarEmpresa/${item._id}`}>
                         <li className='btn btn-success'>Editar</li>
+                    </Link>
+                    
+              </td>
+
+              <td>  
+              <Link to={`/agregarUE/${item._id}`}>
+                        <li className='btn btn-success'>Agregar Usuario</li>
                     </Link>
                     
               </td>
@@ -28,6 +35,12 @@ const Table = ({ data }) => {
               <td>
               <Link to={`/blockchain/${item._id}`}>
                         <li className='btn btn-info'>Ver Block Chain</li>
+                    </Link>
+              </td>
+
+              <td>
+              <Link to={`/VerUsuariosEmpresa/${item._id}`}>
+                        <li className='btn btn-info'>Ver Usuarios</li>
                     </Link>
               </td>
             </tr>

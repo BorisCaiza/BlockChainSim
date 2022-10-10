@@ -1,8 +1,11 @@
 const UserCtrl = {};
 const User = require('../models/User.modal');
-const Block = require("../src/block");
+const Block = require('../src/block');
 const BlockChainModal = require("../models/Blockchain.modal");
 const SHA256 = require("crypto-js/sha256");
+const EmpresaUsuarioModal = require('../models/EmpresaUsuario.modal');
+const BlockchainModal = require('../models/Blockchain.modal');
+
 
 //Obtener usuarios
 
@@ -47,9 +50,10 @@ UserCtrl.createUser = async (req, res) => {
         }
         else {
 
-            const block1 = new Block({ data: NewUser });
-            addBlock(block1, NewUser)
-
+   
+        
+            await NewUser.save()
+            
             res.json({
                 status: 'Se creo al usuario'
             })
@@ -80,10 +84,51 @@ UserCtrl.update = async (req, res) => {
     await User.findByIdAndUpdate(id, nuevoUsuario, { userFindAndModify: false });
 
     const user = await User.findById(req.params.id)
-    
-    const block1 = new Block({ data: user });
 
-    addBlockUpdate(block1, id)
+    
+
+    await user.save();
+
+    const blockchain = await  EmpresaUsuarioModal.find({idUser: id})
+
+    if(blockchain !== undefined){
+
+
+    for(var i = 0; i < blockchain.length; i++){
+
+        var longitud = blockchain[i].cadena.length;
+        let idLastBlock = blockchain[i].cadena[longitud - 1]
+        let lastBlock = await BlockChainModal.findById(idLastBlock.toString())
+
+        const block = new Block({ data: user });
+        block.hash = SHA256(JSON.stringify(block)).toString(); //creamos el hash
+    
+    
+        
+        const SecondBlockChain = new BlockChainModal({
+            hash: block.hash,
+            heigh: longitud,
+            body: block.body,
+            previousHash: lastBlock.hash,
+            tratamiento: null,
+            userId: id,
+            enterpriseId: blockchain[i].enterpriseId,
+    
+        })
+
+        await SecondBlockChain.save()
+        blockchain[i].cadena.push(SecondBlockChain)
+        await blockchain[i].save()
+    }
+
+    
+
+
+
+    }
+
+  
+
     res.json({
         status: 'Usuario actualizado'
     });
